@@ -2,13 +2,13 @@
   <div class="settings">
     <div class="container">
       <FormItem>
-        <template v-slot:title>Название турнира</template>
+        <template v-slot:title>Название турнира:</template>
         <template v-slot:content>
           <EInput
             class="settings__name-input"
             :data="{ required: true, inputMaxLength: 60 }"
             :styleConfig="{
-              borderRadius: '8px',
+              borderRadius: '4px',
               borderColor: '#303540',
               focusBorderColor: '#ff8420',
               backgroundColor: '#303540',
@@ -21,6 +21,12 @@
           />
         </template>
       </FormItem>
+      <FormItem>
+        <template v-slot:title>Тип турнира:</template>
+        <template v-slot:content>
+          <SelectComponent />
+        </template>
+      </FormItem>
     </div>
   </div>
 </template>
@@ -28,10 +34,11 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import FormItem from "@/components/FormItem.vue";
+import SelectComponent from "@/components/SelectComponent.vue";
 
 export default defineComponent({
   name: "SettingsView",
-  components: { FormItem },
+  components: { SelectComponent, FormItem },
   props: {},
   data() {
     return {};
