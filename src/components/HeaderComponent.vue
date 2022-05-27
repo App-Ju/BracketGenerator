@@ -34,6 +34,7 @@ export default defineComponent({
 
   &__title {
     margin-right: 20%;
+    font-size: 23px;
     color: $text-color;
   }
 

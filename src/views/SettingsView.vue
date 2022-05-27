@@ -3,7 +3,23 @@
     <div class="container">
       <FormItem>
         <template v-slot:title>Название турнира</template>
-        <template v-slot:content> input </template>
+        <template v-slot:content>
+          <EInput
+            class="settings__name-input"
+            :data="{ required: true, inputMaxLength: 60 }"
+            :styleConfig="{
+              borderRadius: '8px',
+              borderColor: '#303540',
+              focusBorderColor: '#ff8420',
+              backgroundColor: '#303540',
+              filledBackgroundColor: '#303540',
+              valueColor: '#fff',
+              filledFontColor: '#ced5dc',
+              filledColor: '#ced5dc',
+            }"
+            @update:modelValue="log"
+          />
+        </template>
       </FormItem>
     </div>
   </div>
@@ -38,7 +54,10 @@ export default defineComponent({
     width: 65vw;
     height: 100%;
     margin: 0 auto;
-    //background: #e3ded9;
+  }
+
+  &__name-input {
+    width: 440px;
   }
 }
 </style>
