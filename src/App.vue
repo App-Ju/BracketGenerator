@@ -1,7 +1,10 @@
 <template>
+  <!--  TODO вынести нав в хедер-->
   <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
+    <img alt="logo" src="@/assets/logo.png" />
+    <h1>Гененратор турнирной сетки</h1>
+    <router-link to="/">Настройки</router-link>
+    <router-link to="/about">Сетка</router-link>
   </nav>
   <router-view />
 </template>
@@ -12,18 +15,33 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
 }
 
 nav {
-  padding: 30px;
+  display: flex;
+  align-items: center;
+  padding: 5px;
+  background: #292e3a;
 
-  a {
+  & img {
+    width: 70px;
+    height: 70px;
+    object-fit: contain;
+    margin-right: 30px;
+  }
+
+  & h1 {
+    margin-right: 20%;
+    color: #adbece;
+  }
+
+  & a {
+    margin: 0 30px;
     font-weight: bold;
-    color: #2c3e50;
+    color: #adbece;
 
     &.router-link-exact-active {
-      color: #42b983;
+      color: #ff8420;
     }
   }
 }
