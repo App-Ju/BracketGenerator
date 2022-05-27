@@ -9,8 +9,8 @@ const routes: Array<RouteRecordRaw> = [
     component: SettingsView,
   },
   {
-    path: "/about",
-    name: "about",
+    path: "/bracket",
+    name: "bracket",
     component: BracketView,
   },
 ];
