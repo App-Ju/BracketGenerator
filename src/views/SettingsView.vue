@@ -16,6 +16,7 @@
               valueColor: '#fff',
               filledFontColor: '#ced5dc',
               filledColor: '#ced5dc',
+              fontFamily: 'Raleway',
             }"
             @update:modelValue="log"
           />

@@ -37,14 +37,16 @@ $title-width: 230px;
     min-height: 29px;
     padding-top: 11px;
     padding-right: 20px;
+    font-weight: 500;
   }
 
   &__content {
     display: flex;
     align-items: center;
     min-height: 40px;
-    width: calc(100% - #{$title-width});
+    width: 440px;
     padding-left: 15px;
+    font-weight: 500;
   }
 }
 </style>

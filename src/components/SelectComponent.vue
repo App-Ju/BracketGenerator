@@ -1,5 +1,29 @@
 <template>
-  <ESelect :data="{ options: options }" />
+  <ESelect
+    class="my-select"
+    :data="{ options: options }"
+    :styleConfig="{
+      borderRadius: '4px',
+      borderColor: '#303540',
+      focusBorderColor: '#ff8420',
+      focusBoxShadow: 'rgba(73,255,32,0.45)',
+      backgroundColor: '#303540',
+      filledBackgroundColor: '#303540',
+      valueColor: '#fff',
+      filledFontColor: '#ced5dc',
+      filledColor: '#ced5dc',
+      fontFamily: 'Raleway',
+      valueFontSize: '14px',
+      clearable: 'false',
+    }"
+    :dropdownStyleConfig="{
+      optionColor: '#fff',
+      backgroundColor: '#303540',
+      activeBackgroundColor: '#ff8420',
+      optionHoverBackgroundColor: '#ff8420',
+      fontFamily: 'Raleway',
+    }"
+  />
 </template>
 
 <script lang="ts">
@@ -32,4 +56,8 @@ export default defineComponent({
 });
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+:deep(.select-container__values) {
+  overflow-x: unset !important;
+}
+</style>
