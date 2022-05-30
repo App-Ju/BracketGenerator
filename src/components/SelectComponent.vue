@@ -32,24 +32,14 @@ import { defineComponent } from "vue";
 export default defineComponent({
   name: "SelectComponent",
   components: {},
-  props: {},
+  props: {
+    options: {
+      type: Array,
+      require: true,
+    },
+  },
   data() {
-    return {
-      options: [
-        {
-          name: "Single Elimination",
-          key: 1,
-        },
-        {
-          name: "Double Elimination",
-          key: 2,
-        },
-        {
-          name: "Round Robin",
-          key: 3,
-        },
-      ],
-    };
+    return {};
   },
   computed: {},
   methods: {},
