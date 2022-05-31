@@ -4,7 +4,7 @@ export enum tournamentType {
   RoundRobin,
 }
 
-export enum howManyTimes {
+export enum howManyGames {
   One = 1,
   Two,
   Three,
