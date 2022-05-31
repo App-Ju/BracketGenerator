@@ -84,6 +84,7 @@
                   fontFamily: 'Raleway',
                   valueFontSize: '14px',
                 }"
+                @update:modelValue="setPlayerNames"
               />
             </div>
             <div
@@ -135,7 +136,18 @@
       </FormItem>
       <FormItem>
         <template v-slot:content>
-          <EButton>СОЗДАТЬ</EButton>
+          <EButton
+            :styleConfig="{
+              backgroundColor: '#ff8420',
+              hover: {
+                backgroundColor: '#fc9949',
+              },
+              active: {
+                backgroundColor: '#fd7c14',
+              },
+            }"
+            >СОЗДАТЬ</EButton
+          >
         </template>
       </FormItem>
     </div>
@@ -217,6 +229,9 @@ export default defineComponent({
     },
     setGridSize(value: ISelectOption) {
       this.currentGridSize = value.key;
+    },
+    setPlayerNames(names: string) {
+      console.log(names);
     },
     searchGame(value: string) {
       console.log(value);
