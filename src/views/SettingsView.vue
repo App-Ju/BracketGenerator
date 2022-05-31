@@ -80,9 +80,11 @@
                 class="settings__textarea"
                 :styleConfig="{
                   borderRadius: '4px',
+                  valueColor: '#ced5dc',
                   backgroundColor: '#303540',
+                  borderColor: '#303540',
+                  focusBorderColor: '#ff8420',
                   fontFamily: 'Raleway',
-                  valueFontSize: '14px',
                 }"
                 @update:modelValue="setPlayerNames"
               />
@@ -262,11 +264,6 @@ export default defineComponent({
   &__select {
     width: 100%;
   }
-
-  &__textarea {
-    resize: none;
-    width: 440px;
-  }
 }
 
 .select {
@@ -286,5 +283,11 @@ export default defineComponent({
 #amount-select {
   margin-left: 30px;
   width: 130px;
+}
+
+:deep(textarea) {
+  width: 413px;
+  background-color: $item-background-color;
+  resize: none;
 }
 </style>
