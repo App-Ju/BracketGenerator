@@ -18,7 +18,7 @@
               filledColor: '#ced5dc',
               fontFamily: 'Raleway',
             }"
-            @update:modelValue="setTournamentName"
+            @update:modelValue="settingsStore.setTournamentName"
           />
         </template>
       </FormItem>
@@ -41,7 +41,7 @@
                     borderColor: '#ff8420',
                   },
                 }"
-                @change="thirdPlaceGame"
+                @change="settingsStore.set3rdPlaceGame"
               />
               <div>
                 Включить матч за 3-е место между проигравшими в полуфинале
@@ -54,7 +54,7 @@
               <div>Участник играют друг с другом</div>
               <SelectComponent
                 id="amount-select"
-                :options="howManyTimesOptions"
+                :options="howManyGamesOptions"
                 @update:modelValue="setNumberOfGames"
               />
             </div>
@@ -67,10 +67,10 @@
           <div class="settings__select select">
             <SelectComponent
               :options="bracketSizeOptions"
-              @update:modelValue="setGridSize"
+              @update:modelValue="setBracketSizeType"
             />
             <div
-              v-if="currentGridSize === bracketSize.list"
+              v-if="currentBracketSize === bracketSize.list"
               class="select__items-column"
             >
               <div>- по одному имени в каждой строке</div>
@@ -86,11 +86,11 @@
                   focusBorderColor: '#ff8420',
                   fontFamily: 'Raleway',
                 }"
-                @update:modelValue="setPlayerNames"
+                @update:modelValue="settingsStore.setParticipantNames"
               />
             </div>
             <div
-              v-if="currentGridSize === bracketSize.number"
+              v-if="currentBracketSize === bracketSize.number"
               class="select__items"
             >
               <EInput
@@ -110,6 +110,7 @@
                   filledColor: '#ced5dc',
                   fontFamily: 'Raleway',
                 }"
+                @update:modelValue="settingsStore.setParticipantNumber"
               />
             </div>
           </div>
@@ -161,7 +162,7 @@ import { defineComponent } from "vue";
 import { useSettingsStore } from "@/store/settings";
 import FormItem from "@/components/FormItem.vue";
 import SelectComponent from "@/components/SelectComponent.vue";
-import { tournamentType, howManyTimes, bracketSize } from "@/typescript/enums";
+import { tournamentType, howManyGames, bracketSize } from "@/typescript/enums";
 import { ISelectOption } from "@/typescript/interfaces";
 
 export default defineComponent({
@@ -190,23 +191,23 @@ export default defineComponent({
           key: tournamentType.RoundRobin,
         },
       ],
-      currentNumberTimes: 1,
-      howManyTimes,
-      howManyTimesOptions: [
+      currentNumberOfGames: 1,
+      howManyGames,
+      howManyGamesOptions: [
         {
           name: "единажды",
-          key: howManyTimes.One,
+          key: howManyGames.One,
         },
         {
           name: "дважды",
-          key: howManyTimes.Two,
+          key: howManyGames.Two,
         },
         {
           name: "трижды",
-          key: howManyTimes.Three,
+          key: howManyGames.Three,
         },
       ],
-      currentGridSize: 1,
+      currentBracketSize: 1,
       bracketSize,
       bracketSizeOptions: [
         {
@@ -222,27 +223,33 @@ export default defineComponent({
   },
   computed: {},
   methods: {
-    setTournamentName(value: string) {
-      console.log(value);
+    /**
+     * Задает тип турнирной сетки
+     * @param type
+     */
+    setTournamentType(type: ISelectOption): void {
+      this.currentType = type.key;
+      this.settingsStore.setType(type);
     },
-    setTournamentType(value: ISelectOption) {
-      this.currentType = value.key;
+    /**
+     * Задает количество игр между участниками, для типа турнира = 3
+     * @param value
+     */
+    setNumberOfGames(value: ISelectOption): void {
+      this.currentNumberOfGames = value.key;
+      this.settingsStore.setNumberOfGames(value);
     },
-    thirdPlaceGame(value: boolean) {
-      console.log(value);
+    /**
+     * Задает тип вычисления количества участников
+     * @param value
+     */
+    setBracketSizeType(value: ISelectOption): void {
+      this.currentBracketSize = value.key;
+      this.settingsStore.setBracketSizeType(value);
     },
-    setNumberOfGames(value: ISelectOption) {
-      console.log(value.key);
-    },
-    setGridSize(value: ISelectOption) {
-      this.currentGridSize = value.key;
-    },
-    setPlayerNames(names: string) {
-      console.log(names);
-    },
-    searchGame(value: string) {
-      console.log(value);
-    },
+    // searchGame(value: string): void {
+    //   console.log(value);
+    // },
   },
 });
 </script>
