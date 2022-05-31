@@ -10,7 +10,7 @@ export enum howManyTimes {
   Three,
 }
 
-export enum gridSize {
+export enum bracketSize {
   list = 1,
   number,
 }

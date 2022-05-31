@@ -1,19 +1,21 @@
+import { tournamentType, howManyTimes, bracketSize } from "@/typescript/enums";
+
 export default class Settings {
   name: string;
-  type: string;
-  participantNumber: number;
+  type: tournamentType = tournamentType.SingleElimination;
+  participantNumber: bracketSize = bracketSize.list;
   gameName: string;
   has3rdPlaceGame?: boolean;
-  howPlayEachOther?: number;
+  howPlayEachOther?: howManyTimes = howManyTimes.One;
   participantNames?: [];
 
   constructor(
     name: string,
-    type: string,
-    participantNumber: number,
+    type: tournamentType,
+    participantNumber: bracketSize,
     gameName: string,
     has3rdPlaceGame?: boolean,
-    howPlayEachOther?: number,
+    howPlayEachOther?: howManyTimes,
     participantNames?: []
   ) {
     this.name = name;

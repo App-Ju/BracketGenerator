@@ -1,7 +1,7 @@
 <template>
   <ESelect
     class="my-select"
-    :data="{ options: options }"
+    :data="{ options: options, modelValue: options[0] }"
     :styleConfig="{
       borderRadius: '4px',
       borderColor: '#303540',
@@ -14,7 +14,6 @@
       filledColor: '#ced5dc',
       fontFamily: 'Raleway',
       valueFontSize: '14px',
-      clearable: 'false',
     }"
     :dropdownStyleConfig="{
       optionColor: '#fff',
@@ -47,6 +46,9 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+:deep(.mask-icon-subtract) {
+  display: none;
+}
 :deep(.select-container__values) {
   overflow-x: unset !important;
 }

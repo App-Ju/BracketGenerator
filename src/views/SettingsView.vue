@@ -66,11 +66,11 @@
         <template v-slot:content>
           <div class="settings__select select">
             <SelectComponent
-              :options="gridSizeOptions"
+              :options="bracketSizeOptions"
               @update:modelValue="setGridSize"
             />
             <div
-              v-if="currentGridSize === gridSize.list"
+              v-if="currentGridSize === bracketSize.list"
               class="select__items-column"
             >
               <div>- по одному имени в каждой строке</div>
@@ -90,7 +90,7 @@
               />
             </div>
             <div
-              v-if="currentGridSize === gridSize.number"
+              v-if="currentGridSize === bracketSize.number"
               class="select__items"
             >
               <EInput
@@ -158,18 +158,23 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import { useSettingsStore } from "@/store/settings";
 import FormItem from "@/components/FormItem.vue";
 import SelectComponent from "@/components/SelectComponent.vue";
-import { tournamentType, howManyTimes, gridSize } from "@/typescript/enums";
+import { tournamentType, howManyTimes, bracketSize } from "@/typescript/enums";
 import { ISelectOption } from "@/typescript/interfaces";
 
 export default defineComponent({
   name: "SettingsView",
   components: { SelectComponent, FormItem },
+  setup() {
+    const settingsStore = useSettingsStore();
+    return { settingsStore };
+  },
   props: {},
   data() {
     return {
-      currentType: 0,
+      currentType: 1,
       tournamentType,
       typeOptions: [
         {
@@ -185,7 +190,7 @@ export default defineComponent({
           key: tournamentType.RoundRobin,
         },
       ],
-      currentNumberTimes: 0,
+      currentNumberTimes: 1,
       howManyTimes,
       howManyTimesOptions: [
         {
@@ -201,16 +206,16 @@ export default defineComponent({
           key: howManyTimes.Three,
         },
       ],
-      currentGridSize: 0,
-      gridSize,
-      gridSizeOptions: [
+      currentGridSize: 1,
+      bracketSize,
+      bracketSizeOptions: [
         {
           name: "Использовать кол-во участников из списка ниже",
-          key: gridSize.list,
+          key: bracketSize.list,
         },
         {
           name: "Указать произвольное кол-во команд",
-          key: gridSize.number,
+          key: bracketSize.number,
         },
       ],
     };
