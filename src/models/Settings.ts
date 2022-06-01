@@ -5,7 +5,7 @@ export default class Settings {
   type: tournamentType;
   gameName: string;
   bracketSizeType: bracketSize;
-  participantNumber: number;
+  rounds: number;
   has3rdPlaceGame?: boolean;
   howPlayEachOther?: howManyGames;
   participantNames?: string[];
@@ -15,7 +15,7 @@ export default class Settings {
     type: tournamentType,
     gameName: string,
     bracketSizeType: bracketSize,
-    participantNumber: number,
+    rounds: number,
     has3rdPlaceGame?: boolean,
     howPlayEachOther?: howManyGames,
     participantNames?: string[]
@@ -24,7 +24,7 @@ export default class Settings {
     this.type = type;
     this.gameName = gameName;
     this.bracketSizeType = bracketSizeType;
-    this.participantNumber = participantNumber;
+    this.rounds = rounds;
     this.has3rdPlaceGame = has3rdPlaceGame;
     this.howPlayEachOther = howPlayEachOther;
     this.participantNames = participantNames;
