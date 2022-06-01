@@ -48,19 +48,44 @@ export const useSettingsStore = defineStore("settings", {
       this.settings.bracketSizeType = value.key;
     },
     /**
-     * Задает количество участников турнира
+     * Создает массив пустых строк по количеству учатсников
      * @param value
      */
+    // TODO объединить следующие два метода
     setParticipantNumber(value: number): void {
-      this.settings.participantNumber = value;
+      this.settings.participantNames = Array(value).fill("");
+      this.setRounds(value);
     },
     /**
-     * Задает имена участников турнира
+     * Создает массив имен участников
      * @param names
      */
     setParticipantNames(names: string) {
       this.settings.participantNames = names.trim().split("\n");
-      this.setParticipantNumber(this.settings.participantNames.length);
+      this.setRounds(this.settings.participantNames.length);
+    },
+    /**
+     * Определяет количество раундов для типв турнира = 1
+     * @param value
+     */
+    setRounds(value: number) {
+      if (value <= 0) {
+        this.settings.rounds = 0;
+      } else if (value <= 2) {
+        this.settings.rounds = 1;
+      } else if (value <= 4) {
+        this.settings.rounds = 2;
+      } else if (value <= 8) {
+        this.settings.rounds = 3;
+      } else if (value <= 16) {
+        this.settings.rounds = 4;
+      } else if (value <= 32) {
+        this.settings.rounds = 5;
+      } else if (value <= 64) {
+        this.settings.rounds = 6;
+      } else {
+        this.settings.rounds = 7;
+      }
     },
   },
   getters: {},
