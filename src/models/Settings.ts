@@ -1,4 +1,5 @@
 import { tournamentType, howManyGames, bracketSize } from "@/typescript/enums";
+import { IBracketItem } from "@/typescript/interfaces";
 
 export default class Settings {
   name: string;
@@ -8,7 +9,7 @@ export default class Settings {
   rounds: number;
   has3rdPlaceGame?: boolean;
   howPlayEachOther?: howManyGames;
-  participantNames?: string[];
+  participantNames?: IBracketItem[];
 
   constructor(
     name: string,
@@ -18,7 +19,7 @@ export default class Settings {
     rounds: number,
     has3rdPlaceGame?: boolean,
     howPlayEachOther?: howManyGames,
-    participantNames?: string[]
+    participantNames?: IBracketItem[]
   ) {
     this.name = name;
     this.type = type;

@@ -51,18 +51,22 @@ export const useSettingsStore = defineStore("settings", {
      * Создает массив пустых строк по количеству учатсников
      * @param value
      */
-    // TODO объединить следующие два метода
-    setParticipantNumber(value: number): void {
-      this.settings.participantNames = Array(value).fill("");
-      this.setRounds(value);
-    },
-    /**
-     * Создает массив имен участников
-     * @param names
-     */
-    setParticipantNames(names: string) {
-      this.settings.participantNames = names.trim().split("\n");
-      this.setRounds(this.settings.participantNames.length);
+    setParticipant(value: number | string): void {
+      if (typeof value === "number") {
+        const array = [];
+        for (let i = 1; i <= value; i++) {
+          array.push({ id: i, name: "" });
+        }
+        this.settings.participantNames = array;
+        this.setRounds(value);
+      } else {
+        this.settings.participantNames = [];
+        const array = value.trim().split("\n");
+        for (let i = 0; i < array.length; i++) {
+          this.settings.participantNames.push({ id: i + 1, name: array[i] });
+        }
+        this.setRounds(this.settings.participantNames.length);
+      }
     },
     /**
      * Определяет количество раундов для типв турнира = 1
@@ -88,5 +92,7 @@ export const useSettingsStore = defineStore("settings", {
       }
     },
   },
-  getters: {},
+  getters: {
+    getRounds: (state) => state.settings.rounds,
+  },
 });

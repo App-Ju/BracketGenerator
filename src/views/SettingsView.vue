@@ -86,7 +86,7 @@
                   focusBorderColor: '#ff8420',
                   fontFamily: 'Raleway',
                 }"
-                @update:modelValue="settingsStore.setParticipantNames"
+                @update:modelValue="settingsStore.setParticipant"
               />
             </div>
             <div
@@ -110,7 +110,9 @@
                   filledColor: '#ced5dc',
                   fontFamily: 'Raleway',
                 }"
-                @update:modelValue="settingsStore.setParticipantNumber"
+                @update:modelValue="
+                  settingsStore.setParticipant(Number($event))
+                "
               />
             </div>
           </div>
@@ -149,6 +151,7 @@
                 backgroundColor: '#fd7c14',
               },
             }"
+            @click="createBracket"
             >СОЗДАТЬ</EButton
           >
         </template>
@@ -247,9 +250,57 @@ export default defineComponent({
       this.currentBracketSize = value.key;
       this.settingsStore.setBracketSizeType(value);
     },
-    // searchGame(value: string): void {
-    //   console.log(value);
-    // },
+    createBracket() {
+      const rounds = this.settingsStore.settings.rounds;
+      const amount = this.settingsStore.settings.participantNames?.length || 0;
+      let firstRound = 0;
+      let secondRound = 0;
+      let secondRoundGames = 0;
+      let firstRoundGames = [];
+      // let max = 0;
+      switch (rounds) {
+        case 1:
+          break;
+        case 2:
+          secondRound = 4 - amount;
+          firstRound = (amount - secondRound) / 2;
+          secondRoundGames = 1;
+          break;
+        case 3:
+          secondRound = 8 - amount;
+          firstRound = (amount - secondRound) / 2;
+          secondRoundGames = 4;
+          break;
+        case 4:
+          secondRound = 16 - amount;
+          firstRound = (amount - secondRound) / 2;
+          secondRoundGames = 8;
+          break;
+        case 5:
+          secondRound = 32 - amount;
+          firstRound = (amount - secondRound) / 2;
+          secondRoundGames = 16;
+          break;
+        case 6:
+          secondRound = 64 - amount;
+          firstRound = (amount - secondRound) / 2;
+          secondRoundGames = 32;
+          break;
+        case 7:
+          secondRound = 128 - amount;
+          firstRound = (amount - secondRound) / 2;
+          secondRoundGames = 64;
+          break;
+      }
+      console.log(firstRound, secondRound, secondRoundGames);
+      for (let i = 0; i < firstRound; i++) {
+        firstRoundGames.push([
+          this.settingsStore.settings.participantNames?.shift(),
+          this.settingsStore.settings.participantNames?.pop(),
+        ]);
+      }
+      console.log(firstRoundGames);
+    },
   },
 });
 </script>
@@ -258,7 +309,7 @@ export default defineComponent({
 @import "@/assets/style/variables.scss";
 
 .settings {
-  min-height: calc(100vh - #{$header-height});
+  min-height: calc(95vh - #{$header-height});
   height: fit-content;
   background: $background-color;
   padding-top: 50px;
