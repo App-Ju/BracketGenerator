@@ -25,23 +25,13 @@
   />
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue";
-
-export default defineComponent({
-  name: "SelectComponent",
-  components: {},
-  props: {
-    options: {
-      type: Array,
-      require: true,
-    },
+<script setup>
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const props = defineProps({
+  options: {
+    type: Array,
+    require: true,
   },
-  data() {
-    return {};
-  },
-  computed: {},
-  methods: {},
 });
 </script>
 

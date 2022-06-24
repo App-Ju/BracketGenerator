@@ -1,6 +1,6 @@
 <template>
   <div class="bracket">
-    <BracketWrapper>
+    <div class="bracket__container">
       <BracketColumn>
         <BracketItem style="opacity: 0"></BracketItem>
         <BracketItem></BracketItem>
@@ -24,31 +24,16 @@
       <BracketColumn>
         <BracketItem></BracketItem>
       </BracketColumn>
-    </BracketWrapper>
+    </div>
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue";
-import BracketWrapper from "@/components/BracketWrapper.vue";
+<script setup>
 import BracketItem from "@/components/BracketItem.vue";
 import BracketColumn from "@/components/BracketColumn.vue";
 import { useSettingsStore } from "@/store/settings";
 
-export default defineComponent({
-  name: "SettingsView",
-  components: { BracketColumn, BracketItem, BracketWrapper },
-  setup() {
-    const settingsStore = useSettingsStore();
-    return { settingsStore };
-  },
-  props: {},
-  data() {
-    return {};
-  },
-  computed: {},
-  methods: {},
-});
+const settingsStore = useSettingsStore();
 </script>
 
 <style lang="scss" scoped>
@@ -61,5 +46,16 @@ export default defineComponent({
   height: fit-content;
   background: $background-color;
   padding-top: 50px;
+  &__container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    width: 65%;
+    height: 440px;
+    margin: 0 auto;
+    padding: 20px;
+    background: $item-background-color;
+    overflow: auto;
+  }
 }
 </style>

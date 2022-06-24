@@ -160,149 +160,116 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue";
-import { useSettingsStore } from "@/store/settings";
+<script setup lang="ts">
 import FormItem from "@/components/FormItem.vue";
 import SelectComponent from "@/components/SelectComponent.vue";
-import { tournamentType, howManyGames, bracketSize } from "@/typescript/enums";
+import { ref } from "vue";
 import { ISelectOption } from "@/typescript/interfaces";
 
-export default defineComponent({
-  name: "SettingsView",
-  components: { SelectComponent, FormItem },
-  setup() {
-    const settingsStore = useSettingsStore();
-    return { settingsStore };
+import { useSettingsStore } from "@/store/settings";
+const settingsStore = useSettingsStore();
+
+import { useType } from "@/composible/tournamentType";
+const { currentType, typeOptions, setTournamentType, tournamentType } =
+  useType();
+
+import { bracketSize, howManyGames } from "@/typescript/enums";
+const howManyGamesOptions = [
+  {
+    name: "единажды",
+    key: howManyGames.One,
   },
-  props: {},
-  data() {
-    return {
-      currentType: 1,
-      tournamentType,
-      typeOptions: [
-        {
-          name: "Single Elimination",
-          key: tournamentType.SingleElimination,
-        },
-        {
-          name: "Double Elimination",
-          key: tournamentType.DoubleElimination,
-        },
-        {
-          name: "Round Robin",
-          key: tournamentType.RoundRobin,
-        },
-      ],
-      currentNumberOfGames: 1,
-      howManyGames,
-      howManyGamesOptions: [
-        {
-          name: "единажды",
-          key: howManyGames.One,
-        },
-        {
-          name: "дважды",
-          key: howManyGames.Two,
-        },
-        {
-          name: "трижды",
-          key: howManyGames.Three,
-        },
-      ],
-      currentBracketSize: 1,
-      bracketSize,
-      bracketSizeOptions: [
-        {
-          name: "Использовать кол-во участников из списка ниже",
-          key: bracketSize.list,
-        },
-        {
-          name: "Указать произвольное кол-во команд",
-          key: bracketSize.number,
-        },
-      ],
-    };
+  {
+    name: "дважды",
+    key: howManyGames.Two,
   },
-  computed: {},
-  methods: {
-    /**
-     * Задает тип турнирной сетки
-     * @param type
-     */
-    setTournamentType(type: ISelectOption): void {
-      this.currentType = type.key;
-      this.settingsStore.setType(type);
-    },
-    /**
-     * Задает количество игр между участниками, для типа турнира = 3
-     * @param value
-     */
-    setNumberOfGames(value: ISelectOption): void {
-      this.currentNumberOfGames = value.key;
-      this.settingsStore.setNumberOfGames(value);
-    },
-    /**
-     * Задает тип вычисления количества участников
-     * @param value
-     */
-    setBracketSizeType(value: ISelectOption): void {
-      this.currentBracketSize = value.key;
-      this.settingsStore.setBracketSizeType(value);
-    },
-    createBracket() {
-      const rounds = this.settingsStore.settings.rounds;
-      const amount = this.settingsStore.settings.participantNames?.length || 0;
-      let firstRound = 0;
-      let secondRound = 0;
-      let secondRoundGames = 0;
-      let firstRoundGames = [];
-      // let max = 0;
-      switch (rounds) {
-        case 1:
-          break;
-        case 2:
-          secondRound = 4 - amount;
-          firstRound = (amount - secondRound) / 2;
-          secondRoundGames = 1;
-          break;
-        case 3:
-          secondRound = 8 - amount;
-          firstRound = (amount - secondRound) / 2;
-          secondRoundGames = 4;
-          break;
-        case 4:
-          secondRound = 16 - amount;
-          firstRound = (amount - secondRound) / 2;
-          secondRoundGames = 8;
-          break;
-        case 5:
-          secondRound = 32 - amount;
-          firstRound = (amount - secondRound) / 2;
-          secondRoundGames = 16;
-          break;
-        case 6:
-          secondRound = 64 - amount;
-          firstRound = (amount - secondRound) / 2;
-          secondRoundGames = 32;
-          break;
-        case 7:
-          secondRound = 128 - amount;
-          firstRound = (amount - secondRound) / 2;
-          secondRoundGames = 64;
-          break;
-      }
-      console.log(firstRound, secondRound, secondRoundGames);
-      for (let i = 0; i < firstRound; i++) {
-        firstRoundGames.push([
-          this.settingsStore.settings.participantNames?.shift(),
-          this.settingsStore.settings.participantNames?.pop(),
-        ]);
-      }
-      console.log(firstRoundGames);
-    },
+  {
+    name: "трижды",
+    key: howManyGames.Three,
   },
-});
+];
+const bracketSizeOptions = [
+  {
+    name: "Использовать кол-во участников из списка ниже",
+    key: bracketSize.list,
+  },
+  {
+    name: "Указать произвольное кол-во команд",
+    key: bracketSize.number,
+  },
+];
+
+/**
+ * Тип вычисления количества участников
+ * @param value
+ */
+let currentBracketSize = ref(1);
+function setBracketSizeType(value: ISelectOption): void {
+  currentBracketSize.value = value.key;
+  settingsStore.setBracketSizeType(value);
+}
+
+/**
+ * Количество игр между участниками, для типа турнира = 3
+ * @param value
+ */
+let currentNumberOfGames = ref(1);
+function setNumberOfGames(value: ISelectOption): void {
+  currentNumberOfGames.value = value.key;
+  settingsStore.setNumberOfGames(value);
+}
+
+function createBracket() {
+  const rounds = settingsStore.settings.rounds;
+  const amount = settingsStore.settings.participantNames?.length || 0;
+  let firstRound = 0;
+  let secondRound = 0;
+  let secondRoundGames = 0;
+  let firstRoundGames = [];
+  // let max = 0;
+  switch (rounds) {
+    case 1:
+      break;
+    case 2:
+      secondRound = 4 - amount;
+      firstRound = (amount - secondRound) / 2;
+      secondRoundGames = 1;
+      break;
+    case 3:
+      secondRound = 8 - amount;
+      firstRound = (amount - secondRound) / 2;
+      secondRoundGames = 4;
+      break;
+    case 4:
+      secondRound = 16 - amount;
+      firstRound = (amount - secondRound) / 2;
+      secondRoundGames = 8;
+      break;
+    case 5:
+      secondRound = 32 - amount;
+      firstRound = (amount - secondRound) / 2;
+      secondRoundGames = 16;
+      break;
+    case 6:
+      secondRound = 64 - amount;
+      firstRound = (amount - secondRound) / 2;
+      secondRoundGames = 32;
+      break;
+    case 7:
+      secondRound = 128 - amount;
+      firstRound = (amount - secondRound) / 2;
+      secondRoundGames = 64;
+      break;
+  }
+  console.log(firstRound, secondRound, secondRoundGames);
+  for (let i = 0; i < firstRound; i++) {
+    firstRoundGames.push([
+      settingsStore.settings.participantNames?.shift(),
+      settingsStore.settings.participantNames?.pop(),
+    ]);
+  }
+  console.log(firstRoundGames);
+}
 </script>
 
 <style lang="scss" scoped>

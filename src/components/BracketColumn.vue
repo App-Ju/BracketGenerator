@@ -4,22 +4,7 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue";
-
-// const itemHeight = 55; // высота одного элемента с отступами
-
-export default defineComponent({
-  name: "BracketColumn",
-  components: {},
-  props: {},
-  data() {
-    return {};
-  },
-  computed: {},
-  methods: {},
-});
-</script>
+<script setup></script>
 
 <style lang="scss" scoped>
 .bracket-column {
