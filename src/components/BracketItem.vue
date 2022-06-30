@@ -1,17 +1,24 @@
 <template>
-  <div class="bracket-item">
-    <div class="bracket-item__elements">
-      <div class="bracket-item__element-number">1</div>
-      <div class="bracket-item__element-name">name</div>
+  <div class="bracket-item" :class="{ _hide: data[0]?.id === 0 }">
+    <div class="bracket-item__elements" v-if="data[0]?.id !== 0">
+      <div class="bracket-item__element-number">{{ data[0]?.id }}</div>
+      <div class="bracket-item__element-name">{{ data[0]?.name }}</div>
     </div>
-    <div class="bracket-item__elements">
-      <div class="bracket-item__element-number">22</div>
-      <div class="bracket-item__element-name">name</div>
+    <div class="bracket-item__elements" v-if="data[0]?.id !== 0">
+      <div class="bracket-item__element-number">{{ data[1]?.id }}</div>
+      <div class="bracket-item__element-name">{{ data[1]?.name }}</div>
     </div>
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+const props = defineProps({
+  data: {
+    type: Array,
+    require: true,
+  },
+});
+</script>
 
 <style lang="scss" scoped>
 @import "@/assets/style/variables.scss";
@@ -25,7 +32,8 @@
   border-radius: 4px;
   background-color: $background-color;
   overflow: hidden;
-  margin: 5px 0;
+  margin: 5px 20px;
+  cursor: pointer;
 
   &__elements {
     display: flex;
@@ -44,5 +52,10 @@
     background: #787a80;
     margin-right: 10px;
   }
+}
+
+._hide {
+  background-color: $item-background-color;
+  cursor: auto;
 }
 </style>

@@ -93,6 +93,6 @@ export const useSettingsStore = defineStore("settings", {
     },
   },
   getters: {
-    getRounds: (state) => state.settings.rounds,
+    getSecondRoundTeams: (state) => state.settings.rounds,
   },
 });

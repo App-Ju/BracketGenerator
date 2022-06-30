@@ -1,28 +1,15 @@
 <template>
   <div class="bracket">
     <div class="bracket__container">
-      <BracketColumn>
-        <BracketItem style="opacity: 0"></BracketItem>
-        <BracketItem></BracketItem>
-        <BracketItem></BracketItem>
-        <BracketItem></BracketItem>
-        <BracketItem style="opacity: 0"></BracketItem>
-        <BracketItem></BracketItem>
-        <BracketItem></BracketItem>
-        <BracketItem></BracketItem>
-      </BracketColumn>
-      <BracketColumn>
-        <BracketItem></BracketItem>
-        <BracketItem></BracketItem>
-        <BracketItem></BracketItem>
-        <BracketItem></BracketItem>
-      </BracketColumn>
-      <BracketColumn>
-        <BracketItem></BracketItem>
-        <BracketItem></BracketItem>
-      </BracketColumn>
-      <BracketColumn>
-        <BracketItem></BracketItem>
+      <BracketColumn
+        v-for="(column, index) in bracketStore.bracket"
+        :key="index"
+      >
+        <BracketItem
+          v-for="(item, index) in column"
+          :key="index"
+          :data="item"
+        />
       </BracketColumn>
     </div>
   </div>
@@ -31,9 +18,9 @@
 <script setup>
 import BracketItem from "@/components/BracketItem.vue";
 import BracketColumn from "@/components/BracketColumn.vue";
-import { useSettingsStore } from "@/store/settings";
+import { useBracketStore } from "@/store/bracket";
 
-const settingsStore = useSettingsStore();
+const bracketStore = useBracketStore();
 </script>
 
 <style lang="scss" scoped>
@@ -49,13 +36,11 @@ const settingsStore = useSettingsStore();
   &__container {
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
     width: 65%;
     height: 440px;
     margin: 0 auto;
     padding: 20px;
     background: $item-background-color;
-    overflow: auto;
   }
 }
 </style>

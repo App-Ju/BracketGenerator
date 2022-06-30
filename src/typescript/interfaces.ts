@@ -4,6 +4,6 @@ export interface ISelectOption {
 }
 
 export interface IBracketItem {
-  id: number;
-  name: string;
+  id?: number;
+  name?: string;
 }

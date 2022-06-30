@@ -135,7 +135,6 @@
               filledColor: '#ced5dc',
               fontFamily: 'Raleway',
             }"
-            @update:modelValue="searchGame"
           />
         </template>
       </FormItem>
@@ -151,7 +150,7 @@
                 backgroundColor: '#fd7c14',
               },
             }"
-            @click="createBracket"
+            @click="initialBracket"
             >СОЗДАТЬ</EButton
           >
         </template>
@@ -169,9 +168,15 @@ import { ISelectOption } from "@/typescript/interfaces";
 import { useSettingsStore } from "@/store/settings";
 const settingsStore = useSettingsStore();
 
+// import { useBracketStore } from "@/store/bracket";
+// const bracketStore = useBracketStore();
+
 import { useType } from "@/composible/tournamentType";
 const { currentType, typeOptions, setTournamentType, tournamentType } =
   useType();
+
+import { useCreateBracket } from "@/composible/createBracketOne";
+const { initialBracket } = useCreateBracket();
 
 import { bracketSize, howManyGames } from "@/typescript/enums";
 const howManyGamesOptions = [
@@ -217,58 +222,6 @@ let currentNumberOfGames = ref(1);
 function setNumberOfGames(value: ISelectOption): void {
   currentNumberOfGames.value = value.key;
   settingsStore.setNumberOfGames(value);
-}
-
-function createBracket() {
-  const rounds = settingsStore.settings.rounds;
-  const amount = settingsStore.settings.participantNames?.length || 0;
-  let firstRound = 0;
-  let secondRound = 0;
-  let secondRoundGames = 0;
-  let firstRoundGames = [];
-  // let max = 0;
-  switch (rounds) {
-    case 1:
-      break;
-    case 2:
-      secondRound = 4 - amount;
-      firstRound = (amount - secondRound) / 2;
-      secondRoundGames = 1;
-      break;
-    case 3:
-      secondRound = 8 - amount;
-      firstRound = (amount - secondRound) / 2;
-      secondRoundGames = 4;
-      break;
-    case 4:
-      secondRound = 16 - amount;
-      firstRound = (amount - secondRound) / 2;
-      secondRoundGames = 8;
-      break;
-    case 5:
-      secondRound = 32 - amount;
-      firstRound = (amount - secondRound) / 2;
-      secondRoundGames = 16;
-      break;
-    case 6:
-      secondRound = 64 - amount;
-      firstRound = (amount - secondRound) / 2;
-      secondRoundGames = 32;
-      break;
-    case 7:
-      secondRound = 128 - amount;
-      firstRound = (amount - secondRound) / 2;
-      secondRoundGames = 64;
-      break;
-  }
-  console.log(firstRound, secondRound, secondRoundGames);
-  for (let i = 0; i < firstRound; i++) {
-    firstRoundGames.push([
-      settingsStore.settings.participantNames?.shift(),
-      settingsStore.settings.participantNames?.pop(),
-    ]);
-  }
-  console.log(firstRoundGames);
 }
 </script>
 
